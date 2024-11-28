@@ -5,7 +5,9 @@
     <data>
         <instance id="userDc"
                   class="com.company.jmixonboarding.entity.User">
-            <fetchPlan extends="_base"/>
+            <fetchPlan extends="_base">
+                <property name="department" fetchPlan="_base"/>
+            </fetchPlan>
             <loader/>
         </instance>
     </data>

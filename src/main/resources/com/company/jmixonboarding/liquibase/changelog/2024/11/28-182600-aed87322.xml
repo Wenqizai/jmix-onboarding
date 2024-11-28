@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.11.xsd"        objectQuotingStrategy="QUOTE_ONLY_RESERVED_WORDS">
+<changeSet id="1" author="jmix-onboarding">
+<addColumn tableName="USER_STEP">
+            <column name="USER_ID" type="UUID"/></addColumn>
+
+<addNotNullConstraint columnName="USER_ID" tableName="USER_STEP"/>
+</changeSet>
+<changeSet id="2" author="jmix-onboarding">
+<createIndex indexName="IDX_USER_STEP_USER" tableName="USER_STEP">
+            <column name="USER_ID"/>
+        </createIndex>
+
+<addForeignKeyConstraint baseColumnNames="USER_ID" baseTableName="USER_STEP" constraintName="FK_USER_STEP_ON_USER" onDelete="CASCADE" referencedColumnNames="ID" referencedTableName="USER_"/>
+</changeSet>
+</databaseChangeLog>
