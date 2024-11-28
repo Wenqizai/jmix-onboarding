@@ -35,6 +35,7 @@
                 <textField id="emailField" property="email"/>
                 <comboBox id="timeZoneField" property="timeZoneId"/>
                 <checkBox id="activeField" property="active"/>
+                <comboBox id="onboardingStatusField" property="onboardingStatus"/>
             </column>
         </form>
         <hbox id="editActions" spacing="true">

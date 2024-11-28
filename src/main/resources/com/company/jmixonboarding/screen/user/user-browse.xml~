@@ -49,7 +49,6 @@
                 <column id="email"/>
                 <column id="timeZoneId"/>
                 <column id="active"/>
-                <column id="onboardingStatus"/>
             </columns>
             <simplePagination/>
             <buttonsPanel id="buttonsPanel"

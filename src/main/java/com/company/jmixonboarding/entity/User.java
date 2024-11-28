@@ -9,7 +9,14 @@ import io.jmix.core.metamodel.annotation.InstanceName;
 import io.jmix.core.metamodel.annotation.JmixEntity;
 import io.jmix.security.authentication.JmixUserDetails;
 import org.springframework.security.core.GrantedAuthority;
-import javax.persistence.*;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Index;
+import javax.persistence.Table;
+import javax.persistence.Transient;
+import javax.persistence.Version;
 import javax.validation.constraints.Email;
 import java.util.Collection;
 import java.util.Collections;
@@ -23,7 +30,7 @@ import java.util.UUID;
 public class User implements JmixUserDetails, HasTimeZone {
 
     @Id
-    @Column(name = "ID")
+    @Column(name = "ID", nullable = false)
     @JmixGeneratedValue
     private UUID id;
 
@@ -55,8 +62,19 @@ public class User implements JmixUserDetails, HasTimeZone {
     @Column(name = "TIME_ZONE_ID")
     protected String timeZoneId;
 
+    @Column(name = "ONBOARDING_STATUS")
+    private Integer onboardingStatus;
+
     @Transient
     protected Collection<? extends GrantedAuthority> authorities;
+
+    public OnboardingStatus getOnboardingStatus() {
+        return onboardingStatus == null ? null : OnboardingStatus.fromId(onboardingStatus);
+    }
+
+    public void setOnboardingStatus(OnboardingStatus onboardingStatus) {
+        this.onboardingStatus = onboardingStatus == null ? null : onboardingStatus.getId();
+    }
 
     public UUID getId() {
         return id;
