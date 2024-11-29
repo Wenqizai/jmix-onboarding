@@ -7,9 +7,22 @@
                   class="com.company.jmixonboarding.entity.User">
             <fetchPlan extends="_base">
                 <property name="department" fetchPlan="_base"/>
+                <property name="steps" fetchPlan="_base">
+                    <property name="step" fetchPlan="_base"/>
+                </property>
             </fetchPlan>
             <loader/>
+            <collection id="stepsDc" property="steps"/>
         </instance>
+        <collection id="departmentsDc" class="com.company.jmixonboarding.entity.Department">
+            <fetchPlan extends="_base"/>
+            <loader id="departmentsDl">
+                <query>
+                    <![CDATA[select e from Department e
+                    order by e.name asc]]>
+                </query>
+            </loader>
+        </collection>
     </data>
     <actions>
         <action id="windowCommitAndClose" type="editor_commitClose"/>
@@ -38,8 +51,22 @@
                 <comboBox id="timeZoneField" property="timeZoneId"/>
                 <checkBox id="activeField" property="active"/>
                 <comboBox id="onboardingStatusField" property="onboardingStatus"/>
+                <entityComboBox id="departmentField" property="department" optionsContainer="departmentsDc"/>
+                <dateField id="joiningDateField" property="joiningDate"/>
             </column>
         </form>
+        <groupTable id="userStepsTable" dataContainer="stepsDc" width="85%" height="200px">
+            <columns>
+                <column id="step.name"/>
+                <column id="dueDate"/>
+                <column id="completedDate"/>
+                <column id="completed"/>
+            </columns>
+            <buttonsPanel>
+                <button id="generateButton" caption="msg://generateButton.caption"/>
+                <button id="resetButton" caption="Reset"/>
+            </buttonsPanel>
+        </groupTable>
         <hbox id="editActions" spacing="true">
             <button id="commitAndCloseBtn" action="windowCommitAndClose"/>
             <button id="closeBtn" action="windowClose"/>

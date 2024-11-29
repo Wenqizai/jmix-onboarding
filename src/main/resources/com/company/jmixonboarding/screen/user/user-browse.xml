@@ -54,6 +54,7 @@
                 <column id="onboardingStatus"/>
                 <column id="department"/>
                 <column id="password"/>
+                <column id="joiningDate"/>
             </columns>
             <simplePagination/>
             <buttonsPanel id="buttonsPanel"
