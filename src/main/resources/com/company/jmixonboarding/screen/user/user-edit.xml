@@ -54,6 +54,10 @@
                 <entityComboBox id="departmentField" property="department" optionsContainer="departmentsDc"/>
                 <dateField id="joiningDateField" property="joiningDate"/>
             </column>
+            <column>
+                <fileStorageUpload id="pictureField" property="picture"/>
+                <image id="image" property="picture" scaleMode="CONTAIN" rowspan="10" height="200" width="200"/>
+            </column>
         </form>
         <groupTable id="userStepsTable" dataContainer="stepsDc" width="85%" height="200px">
             <columns>
