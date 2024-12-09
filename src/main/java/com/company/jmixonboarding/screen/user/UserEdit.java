@@ -15,8 +15,10 @@ import io.jmix.ui.component.ComboBox;
 import io.jmix.ui.component.Component;
 import io.jmix.ui.component.PasswordField;
 import io.jmix.ui.component.TextField;
+import io.jmix.ui.model.CollectionContainer;
 import io.jmix.ui.model.CollectionPropertyContainer;
 import io.jmix.ui.model.DataContext;
+import io.jmix.ui.model.InstanceContainer;
 import io.jmix.ui.navigation.Route;
 import io.jmix.ui.screen.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -131,9 +133,6 @@ public class UserEdit extends StandardEditor<User> {
                 .query("select s from Step s order by s.sortValue asc ")
                 .list();
 
-        // 删除数据库记录, 这个不好实现, 如果用户点击取消了, 就不能够删除数据库记录了
-        entityManager.createQuery("delete from UserStep where user.id = :userId").setParameter("userId", user.getId()).executeUpdate();
-
         for (Step step : steps) {
             if (stepsDc.getItems().stream().noneMatch(userStep -> userStep.getStep().equals(step))) {
                 UserStep userStep = dataContext.create(UserStep.class);
@@ -146,9 +145,6 @@ public class UserEdit extends StandardEditor<User> {
         }
 
     }
-
-    @PersistenceContext
-    private EntityManager entityManager;
 
     @Subscribe("resetButton")
     public void onResetButtonClick(final Button.ClickEvent event) {
@@ -173,5 +169,28 @@ public class UserEdit extends StandardEditor<User> {
             }
         });
         return checkBox;
+    }
+
+    @Subscribe(id = "stepsDc", target = Target.DATA_CONTAINER)
+    public void onStepsDcCollectionChange(final CollectionContainer.CollectionChangeEvent<UserStep> event) {
+        updateOnboardingStatus();
+    }
+
+    @Subscribe(id = "stepsDc", target = Target.DATA_CONTAINER)
+    public void onStepsDcItemChange(final InstanceContainer.ItemChangeEvent<UserStep> event) {
+        updateOnboardingStatus();
+    }
+
+    private void updateOnboardingStatus() {
+        User user = getEditedEntity();
+        long completedCount = user.getSteps() == null ? 0
+                : user.getSteps().stream().filter(userStep -> userStep.getCompletedDate() != null).count();
+        if (completedCount == 0) {
+            user.setOnboardingStatus(OnboardingStatus.NOT_STARTED);
+        } else if (completedCount == user.getSteps().size()) {
+            user.setOnboardingStatus(OnboardingStatus.COMPLETED);
+        } else {
+            user.setOnboardingStatus(OnboardingStatus.IN_PROGRESS);
+        }
     }
 }

@@ -57,10 +57,10 @@
         </form>
         <groupTable id="userStepsTable" dataContainer="stepsDc" width="85%" height="200px">
             <columns>
+                <column id="completed" caption="" width="50px"/>
                 <column id="step.name"/>
                 <column id="dueDate"/>
                 <column id="completedDate"/>
-                <column id="completed"/>
             </columns>
             <buttonsPanel>
                 <button id="generateButton" caption="msg://generateButton.caption"/>
