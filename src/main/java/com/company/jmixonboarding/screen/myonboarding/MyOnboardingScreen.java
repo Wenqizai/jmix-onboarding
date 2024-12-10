@@ -104,7 +104,7 @@ public class MyOnboardingScreen extends Screen {
     @Subscribe("saveButton")
     public void onSaveButtonClick(final Button.ClickEvent event) {
         dataContext.commit();
-        clone(StandardOutcome.COMMIT);
+        close(StandardOutcome.COMMIT);
     }
 
     @Subscribe("discardButton")
@@ -112,8 +112,4 @@ public class MyOnboardingScreen extends Screen {
         close(StandardOutcome.DISCARD);
     }
 
-
-    private void clone(StandardOutcome standardOutcome) {
-
-    }
 }

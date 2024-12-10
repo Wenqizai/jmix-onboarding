@@ -34,8 +34,8 @@
         </table>
         <label id="spacer"/>
         <hbox spacing="true">
-            <button id="saveButton" caption="Save" primary="true" action="windowCommitAndClose"/>
-            <button id="discardButton" caption="Discard"  action="windowClose"/>
+            <button id="saveButton" caption="Save" primary="true"/>
+            <button id="discardButton" caption="Discard"/>
         </hbox>
     </layout>
 </window>
